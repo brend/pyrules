@@ -4,6 +4,7 @@ from collections import defaultdict
 
 from actions import Action
 from conditions import Condition
+from product import Product
 
 
 class Rule:
@@ -14,6 +15,20 @@ class Rule:
         self.conditions = conditions
         self.actions = actions
         super().__init__()
+
+    def apply(self, product: Product) -> None:
+        if self.is_applicable(product):
+            self.apply_actions(product)
+
+    def is_applicable(self, product: Product) -> bool:
+        for condition in self.conditions:
+            if not condition.matches(product):
+                return False
+        return True
+
+    def apply_actions(self, product: Product) -> None:
+        for action in self.actions:
+            action.apply(product)
 
     def __repr__(self) -> str:
         conds = " and ".join(str(c) for c in self.conditions)
@@ -27,6 +42,10 @@ class RuleRegistry:
 
     def register(self, rule: Rule):
         self.classRules[rule.typeclass].append(rule)
+
+    def apply(self, product: Product) -> None:
+        for rule in self.classRules[product.typeclass]:
+            rule.apply(product)
 
     def print(self) -> None:
         for typeclass, rules in self.classRules.items():
