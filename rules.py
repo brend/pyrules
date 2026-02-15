@@ -111,7 +111,7 @@ class ConditionRuleBuilder:
         self.typeclass = typeclass
         self.conditions = conditions
 
-    def andWhen(self, condition: Condition) -> ConditionRuleBuilder:
+    def and_when(self, condition: Condition) -> ConditionRuleBuilder:
         self.conditions.append(condition)
         return self
 

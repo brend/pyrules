@@ -9,7 +9,7 @@ def has(attribute: str, value: str) -> Has:
     return Has(attribute, value)
 
 
-def isPart(part: str) -> IsPart:
+def is_part(part: str) -> IsPart:
     return IsPart(part)
 
 
