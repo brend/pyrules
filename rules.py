@@ -1,72 +1,12 @@
 from __future__ import annotations
 
-from abc import ABC, abstractmethod
 from collections import defaultdict
 
-
-class Product:
-    def __init__(self, part: str) -> None:
-        self.part = part
-        self.attributes: dict[str, str] = defaultdict(None)
-
-    def get(self, attribute: str) -> str | None:
-        self.attributes[attribute]
-
-    def set(self, attribute: str, value: str) -> None:
-        self.attributes[attribute] = value
+from actions import Action
+from conditions import Condition
 
 
-class Condition(ABC):
-    @abstractmethod
-    def matches(self, product: Product) -> bool:
-        pass
-
-
-class Has(Condition):
-    def __init__(self, attribute: str, value: str) -> None:
-        super().__init__()
-        self.attribute = attribute
-        self.value = value
-
-    def matches(self, product: Product) -> bool:
-        return product.get(self.attribute) == self.value
-
-    def __str__(self) -> str:
-        return f"{self.attribute} is {self.value}"
-
-
-class IsPart(Condition):
-    def __init__(self, part: str) -> None:
-        super().__init__()
-        self.part = part
-
-    def matches(self, product: Product) -> bool:
-        return product.part == self.part
-
-    def __str__(self) -> str:
-        return f"it is a {self.part}"
-
-
-class Action(ABC):
-    @abstractmethod
-    def apply(self, product: Product) -> None:
-        pass
-
-
-class Set(Action):
-    def __init__(self, attribute: str, value: str) -> None:
-        super().__init__()
-        self.attribute = attribute
-        self.value = value
-
-    def apply(self, product: Product) -> None:
-        product.set(self.attribute, self.value)
-
-    def __str__(self) -> str:
-        return f"set {self.attribute} to {self.value}"
-
-
-class Rule(ABC):
+class Rule:
     def __init__(
         self, typeclass: str, conditions: list[Condition], actions: list[Action]
     ) -> None:

@@ -1,4 +1,6 @@
-from rules import Has, IsPart, Set, TypeclassRuleBuilder
+from actions import Set
+from conditions import Has, IsPart
+from rules import TypeclassRuleBuilder
 
 
 def typeclass(typeclass: str) -> TypeclassRuleBuilder:
